@@ -1,9 +1,5 @@
-import { NewTransactionBtnContainer } from "./styles";
+import { NewTransactionBtnContainer } from './styles'
 
 export function NewTransactionBtn() {
-  return (
-    <NewTransactionBtnContainer>
-      Nova transação
-    </NewTransactionBtnContainer>
-  )
+  return <NewTransactionBtnContainer>Nova transação</NewTransactionBtnContainer>
 }

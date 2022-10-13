@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const HeaderContainer = styled.header`
   display: flex;
@@ -7,8 +7,8 @@ export const HeaderContainer = styled.header`
   padding-top: 2.5rem;
   padding-inline: 10rem;
 
-  background-color: ${params => params.theme["gray-900"]};
-  
+  background-color: ${(params) => params.theme['gray-900']};
+
   > img {
     width: 10.75rem;
   }

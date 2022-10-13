@@ -1,5 +1,5 @@
-import { TransactionsHeader } from "./components/TransactionsHeader";
-import { TransactionsContainer } from "./styles";
+import { TransactionsHeader } from './components/TransactionsHeader'
+import { TransactionsContainer } from './styles'
 
 export function Transactions() {
   return (
