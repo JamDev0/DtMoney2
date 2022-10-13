@@ -23,4 +23,8 @@ export const GlobalStyles = createGlobalStyle`
     font: 400 1rem 'Roboto', sans-serif;
     line-height: 160%;
   }
+
+  button {
+    border: 0;
+  }
 `
