@@ -1,7 +1,7 @@
 import { HeaderContainer } from './styles'
 
 import Logo from '../../../../assets/Logo.svg'
-import { NewTransactionBtn } from './NewTransactionBtn'
+import { NewTransactionBtn } from './components/NewTransactionBtn'
 
 export function TransactionsHeader() {
   return (
