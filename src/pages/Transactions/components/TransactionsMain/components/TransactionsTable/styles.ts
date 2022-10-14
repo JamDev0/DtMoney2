@@ -20,7 +20,7 @@ export const TransactionsTableContainer = styled.table`
 
     padding: 1.25rem 2rem;
 
-    background-color: ${params => params.theme['gray-700']};
+    background-color: ${(params) => params.theme['gray-700']};
 
     border-radius: 5px;
   }
