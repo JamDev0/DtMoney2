@@ -1,14 +1,21 @@
 import { HeaderContainer } from './styles'
 
 import Logo from '../../../../assets/Logo.svg'
+
 import { NewTransactionBtn } from './components/NewTransactionBtn'
+
+import { TransactionsResume } from './components/TransactionsResume'
 
 export function TransactionsHeader() {
   return (
     <HeaderContainer>
-      <img src={Logo} alt="" />
+      <div>
+        <img src={Logo} alt="" />
 
-      <NewTransactionBtn />
+        <NewTransactionBtn />
+      </div>
+
+      <TransactionsResume />
     </HeaderContainer>
   )
 }
