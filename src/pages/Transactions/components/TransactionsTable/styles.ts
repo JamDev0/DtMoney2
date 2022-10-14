@@ -1,4 +1,4 @@
-import styled, {css} from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const TransactionsTableContainer = styled.table`
   width: 100%;
@@ -15,10 +15,16 @@ interface TransactionPriceParams {
 }
 
 const TransactionPriceColor = {
-  withdrawn: css`color: ${params => params.theme.}`
+  withdrawn: css`
+    color: ${(params) => params.theme['red-300']};
+  `,
+  deposit: css`
+    color: ${(params) => params.theme['green-500']};
+  `,
 }
 
-export const TransactionPrice = styled.td`
+export const TransactionPrice = styled.td<TransactionPriceParams>`
+  ${(params) => TransactionPriceColor[params.type]}
 `
 
 export const TransactionDate = styled.td`
