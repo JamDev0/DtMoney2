@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 export const TransactionsTableContainer = styled.table`
   width: 100%;
 
-  padding-inline: 10rem;
+  margin-bottom: 2.5rem;
 
   tbody {
     width: 100%;
