@@ -1,0 +1,1 @@
+[] - Fazer o app todo ter um tamanho fixo
