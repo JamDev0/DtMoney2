@@ -1,0 +1,36 @@
+{
+  "transactions": [
+    {
+      "id": 1,
+      "description": "Dev de SPA React para a LDS",
+      "category": "Freelance",
+      "price": 1200,
+      "type": "deposit",
+      "createdAt": "2022-8-20T12:22:57.480Z"
+    },
+    {
+      "id": 2,
+      "description": "Compra do mês",
+      "category": "Mercado",
+      "price": 350,
+      "type": "withdrawn",
+      "createdAt": "2022-10-20T12:22:57.480Z"
+    },
+    {
+      "id": 3,
+      "description": "Dev de SPA para o GLP",
+      "category": "Freelance",
+      "price": 1000,
+      "type": "deposit",
+      "createdAt": "2022-9-20T12:22:57.480Z"
+    },
+    {
+      "id": 4,
+      "description": "Lanche no MC",
+      "category": "Alimentação",
+      "price": 43,
+      "type": "withdrawn",
+      "createdAt": "2022-10-19T12:22:57.480Z"
+    }
+  ]
+}
