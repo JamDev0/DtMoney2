@@ -13,6 +13,7 @@ interface TransactionResumeCardProps
     TransactionResumeCardHeaderParams {
   title: string
   icon: ReactNode
+  value: number
 }
 
 export function TransactionResumeCard({
@@ -20,7 +21,12 @@ export function TransactionResumeCard({
   icon,
   title,
   iconColor,
+  value,
 }: TransactionResumeCardProps) {
+  const formattedPrice = Intl.NumberFormat('pt-br', {
+    minimumFractionDigits: 2,
+  }).format(value)
+
   return (
     <TransactionResumeCardContainer background={background}>
       <Header iconColor={iconColor}>
@@ -29,7 +35,7 @@ export function TransactionResumeCard({
         {icon}
       </Header>
       <Body>
-        <h2>R$ 17.000,00</h2>
+        <h2>R$ {formattedPrice}</h2>
       </Body>
     </TransactionResumeCardContainer>
   )

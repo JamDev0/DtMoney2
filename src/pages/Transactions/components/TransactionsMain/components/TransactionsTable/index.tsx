@@ -1,28 +1,29 @@
-import {
-  Td,
-  TransactionDate,
-  TransactionPrice,
-  TransactionsTableContainer,
-  TransactionTitle,
-} from './styles'
+import { useTransactionsAPI } from '../../../../../../hooks/useTransactionsAPI'
+import { TransactionsTableContainer } from './styles'
+import { TransactionTableRow } from './TransactionsTableRow'
 
 export function TransactionsTable() {
+  const { isLoading, transactions } = useTransactionsAPI()
+
   return (
     <TransactionsTableContainer>
       <tbody>
-        <tr>
-          <TransactionTitle>Desenvolvimento de site</TransactionTitle>
-          <TransactionPrice type="deposit">R$ 12.000,00</TransactionPrice>
-          <Td>Venda</Td>
-          <TransactionDate>13/04/2022</TransactionDate>
-        </tr>
-
-        <tr>
-          <TransactionTitle>Desenvolvimento de site</TransactionTitle>
-          <TransactionPrice type="withdrawn">- R$ 12.000,00</TransactionPrice>
-          <Td>Venda</Td>
-          <TransactionDate>13/04/2022</TransactionDate>
-        </tr>
+        {isLoading === false ? (
+          transactions.map(
+            ({ category, createdAt, description, id, price, type }) => (
+              <TransactionTableRow
+                category={category}
+                createdAt={createdAt}
+                description={description}
+                price={price}
+                type={type}
+                key={id}
+              />
+            ),
+          )
+        ) : (
+          <span>carregando</span>
+        )}
       </tbody>
     </TransactionsTableContainer>
   )
