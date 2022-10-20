@@ -1,4 +1,5 @@
 import { ThemeProvider } from 'styled-components'
+import { TransactionsAPIProvider } from './hooks/useTransactionsAPI'
 import { TransactionTypeProvider } from './hooks/useTransactionType'
 import { Transactions } from './pages/Transactions'
 import { GlobalStyles } from './styles/global'
@@ -8,9 +9,11 @@ export function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <TransactionTypeProvider>
-        <GlobalStyles />
+        <TransactionsAPIProvider>
+          <GlobalStyles />
 
-        <Transactions />
+          <Transactions />
+        </TransactionsAPIProvider>
       </TransactionTypeProvider>
     </ThemeProvider>
   )
