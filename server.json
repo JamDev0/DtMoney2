@@ -6,7 +6,7 @@
       "category": "Freelance",
       "price": 1200,
       "type": "deposit",
-      "createdAt": "2022-8-20T12:22:57.480Z"
+      "createdAt": "2022-08-20T12:22:57.480Z"
     },
     {
       "id": 2,
@@ -22,7 +22,7 @@
       "category": "Freelance",
       "price": 1000,
       "type": "deposit",
-      "createdAt": "2022-9-20T12:22:57.480Z"
+      "createdAt": "2022-09-20T12:22:57.480Z"
     },
     {
       "id": 4,
