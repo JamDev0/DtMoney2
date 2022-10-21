@@ -56,9 +56,15 @@ export const SearchBtn = styled.button`
   > span {
     font-weight: bold;
   }
-
-  :hover {
+  
+  :not(:disabled):hover {
     color: ${(params) => params.theme.white};
     background-color: ${(params) => params.theme['green-300']};
+  }
+
+  :disabled {
+    opacity: 0.75;
+
+    cursor: not-allowed;
   }
 `

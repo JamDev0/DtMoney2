@@ -11,24 +11,28 @@ import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 const searchFormSchema = z.object({
-  query: z.string()
+  query: z.string(),
 })
 
 type searchFormInputs = z.infer<typeof searchFormSchema>
 
 export function TransactionsSearchForm() {
-  const { register, handleSubmit } = useForm<searchFormInputs>({
-    resolver: zodResolver(searchFormSchema)
+  const { register, handleSubmit, formState: {isSubmitting} } = useForm<searchFormInputs>({
+    resolver: zodResolver(searchFormSchema),
   })
 
-  function handleTransactionsSearchFormContainer(data: searchFormInputs) {
+  async function handleTransactionsSearchFormContainer(data: searchFormInputs) {
+    await new Promise(resolve => setTimeout(resolve, 2000))
 
+    console.log(data)
   }
 
   return (
-    <TransactionsSearchFormContainer>
-      <SearchInput placeholder="Busque por transações" />
-      <SearchBtn {...register('query')}>
+    <TransactionsSearchFormContainer
+      onSubmit={handleSubmit(handleTransactionsSearchFormContainer)}
+    >
+      <SearchInput placeholder="Busque por transações" {...register('query')} />
+      <SearchBtn type='submit' disabled={isSubmitting}>
         <MagnifyingGlass />
 
         <span>Buscar</span>
