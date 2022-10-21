@@ -1,5 +1,8 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import * as Dialog from '@radix-ui/react-dialog'
 import { X } from 'phosphor-react'
+import { useForm } from 'react-hook-form'
+import * as z from 'zod'
 import { NewTransactionTypeOption } from '../NewTransactionTypeOption'
 
 import {
@@ -12,7 +15,22 @@ import {
   RegisterNewTransactionBtnContainer,
 } from './styles'
 
+const newTransactionFormSchema = z.object({
+  description: z.string(),
+  price: z.number(),
+  category: z.string(),
+  // type: z.enum(['withdrawn', 'deposit'])
+})
+
+type newTransactionFormInputs = z.infer<typeof newTransactionFormSchema>
+
 export function NewTransactionModal() {
+  const { register, handleSubmit, formState: {isSubmitting}, reset } = useForm<newTransactionFormInputs>({resolver: zodResolver(newTransactionFormSchema)})
+
+  function handleNewTransactionFormSubmit(data: newTransactionFormInputs) {
+    reset()
+  }
+
   return (
     <Dialog.Portal>
       <Dialog.Overlay asChild>
@@ -21,7 +39,7 @@ export function NewTransactionModal() {
 
       <Dialog.Content asChild>
         <DialogContentContainer>
-          <section>
+          <form onSubmit={handleSubmit(handleNewTransactionFormSubmit)}>
             <Dialog.Close asChild>
               <CloseModalBtn>
                 <X />
@@ -33,9 +51,9 @@ export function NewTransactionModal() {
             </Dialog.Title>
 
             <NewTransactionModalInputsContainer>
-              <NewTransactionModalInput placeholder="Descrição" />
-              <NewTransactionModalInput placeholder="Preço" />
-              <NewTransactionModalInput placeholder="Categoria" />
+              <NewTransactionModalInput placeholder="Descrição" required {...register('description')}/>
+              <NewTransactionModalInput placeholder="Preço" required {...register('price', {valueAsNumber: true})}/>
+              <NewTransactionModalInput placeholder="Categoria" required {...register('category')} />
             </NewTransactionModalInputsContainer>
 
             <NewTransactionTypeOptionsContainer>
@@ -50,10 +68,10 @@ export function NewTransactionModal() {
               />
             </NewTransactionTypeOptionsContainer>
 
-            <RegisterNewTransactionBtnContainer>
+            <RegisterNewTransactionBtnContainer disabled={isSubmitting}>
               Cadastrar
             </RegisterNewTransactionBtnContainer>
-          </section>
+          </form>
         </DialogContentContainer>
       </Dialog.Content>
     </Dialog.Portal>

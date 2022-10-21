@@ -31,7 +31,7 @@ export const DialogContentContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  > section {
+  > form {
     position: relative;
 
     width: 33.5rem;
