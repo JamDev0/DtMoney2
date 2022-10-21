@@ -89,6 +89,16 @@ export const NewTransactionModalInput = styled.input`
 
   background-color: ${(params) => params.theme['gray-900']};
 
+  &[type=number] {
+    ::-webkit-outer-spin-button,
+    ::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    -moz-appearance: textfield;
+  }
+
   ::placeholder {
     color: ${(params) => params.theme['gray-500']};
   }

@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 export const TransactionsSearchFormContainer = styled.form`
   width: 100%;
@@ -23,6 +23,16 @@ export const SearchInput = styled.input`
 
   ::placeholder {
     color: ${(params) => params.theme['gray-500']};
+  }
+`
+
+const SearchBtnLoadingAnimation = keyframes`
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360);
   }
 `
 
@@ -51,6 +61,8 @@ export const SearchBtn = styled.button`
     font-size: 1.25rem;
 
     line-height: 0;
+
+    transform: rotate(360deg);
   }
 
   > span {
@@ -66,5 +78,14 @@ export const SearchBtn = styled.button`
     opacity: 0.75;
 
     cursor: not-allowed;
+
+    > svg {
+      animation-name: ${SearchBtnLoadingAnimation};
+      animation-duration: 300ms;
+      animation-timing-function: ease-in-out;
+      animation-play-state: running;
+      animation-iteration-count: infinite;
+
+    }
   }
 `

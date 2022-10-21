@@ -22,7 +22,7 @@ export function NewTransactionTypeOption({
   return (
     <NewTransactionTypeOptionContainer
       typeOfTransaction={typeOfTransaction}
-      onClick={() => selectTransactionType(typeOfTransaction)}
+      onClick={(event) => {event.preventDefault(); selectTransactionType(typeOfTransaction)}}
       isSelected={isCurrentTypeSelected}
     >
       {typeOfTransaction === 'deposit' ? (

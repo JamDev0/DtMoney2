@@ -16,6 +16,12 @@ export function transactionTypeReducer(
         draft.selected = action.payload
       })
     }
+
+    case actionTypes.RESET_TRANSACTION_TYPE: {
+      return produce(state, draft => {
+        draft.selected = null
+      })
+    }
   }
 
   return state

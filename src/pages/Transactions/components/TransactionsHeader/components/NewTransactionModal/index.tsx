@@ -3,6 +3,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { X } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
+import { useTransactionType } from '../../../../../../hooks/useTransactionType'
 import { NewTransactionTypeOption } from '../NewTransactionTypeOption'
 
 import {
@@ -25,10 +26,18 @@ const newTransactionFormSchema = z.object({
 type newTransactionFormInputs = z.infer<typeof newTransactionFormSchema>
 
 export function NewTransactionModal() {
+  const { resetTransactionType } = useTransactionType()
+
   const { register, handleSubmit, formState: {isSubmitting}, reset } = useForm<newTransactionFormInputs>({resolver: zodResolver(newTransactionFormSchema)})
 
-  function handleNewTransactionFormSubmit(data: newTransactionFormInputs) {
+  async function handleNewTransactionFormSubmit(data: newTransactionFormInputs) {
+    await new Promise(resolve => setTimeout(resolve, 2000))
+
     reset()
+    
+    resetTransactionType()
+
+    console.log(data)
   }
 
   return (
@@ -41,7 +50,7 @@ export function NewTransactionModal() {
         <DialogContentContainer>
           <form onSubmit={handleSubmit(handleNewTransactionFormSubmit)}>
             <Dialog.Close asChild>
-              <CloseModalBtn>
+              <CloseModalBtn onClick={resetTransactionType}>
                 <X />
               </CloseModalBtn>
             </Dialog.Close>
@@ -51,9 +60,9 @@ export function NewTransactionModal() {
             </Dialog.Title>
 
             <NewTransactionModalInputsContainer>
-              <NewTransactionModalInput placeholder="Descrição" required {...register('description')}/>
-              <NewTransactionModalInput placeholder="Preço" required {...register('price', {valueAsNumber: true})}/>
-              <NewTransactionModalInput placeholder="Categoria" required {...register('category')} />
+              <NewTransactionModalInput type='text' placeholder="Descrição" required {...register('description')}/>
+              <NewTransactionModalInput type='number' placeholder="Preço" required {...register('price', {valueAsNumber: true})}/>
+              <NewTransactionModalInput type='text' placeholder="Categoria" required {...register('category')} />
             </NewTransactionModalInputsContainer>
 
             <NewTransactionTypeOptionsContainer>
