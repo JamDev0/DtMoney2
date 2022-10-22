@@ -28,11 +28,11 @@ export const SearchInput = styled.input`
 
 const SearchBtnLoadingAnimation = keyframes`
   0% {
-    transform: rotate(0);
+    transform: rotate(0deg);
   }
 
   100% {
-    transform: rotate(360);
+    transform: rotate(360deg);
   }
 `
 
@@ -68,7 +68,7 @@ export const SearchBtn = styled.button`
   > span {
     font-weight: bold;
   }
-  
+
   :not(:disabled):hover {
     color: ${(params) => params.theme.white};
     background-color: ${(params) => params.theme['green-300']};
@@ -81,11 +81,10 @@ export const SearchBtn = styled.button`
 
     > svg {
       animation-name: ${SearchBtnLoadingAnimation};
-      animation-duration: 300ms;
-      animation-timing-function: ease-in-out;
+      animation-duration: 900ms;
+      animation-timing-function: cubic-bezier(0.59, -0.245, 0.455, 1.32);
       animation-play-state: running;
       animation-iteration-count: infinite;
-
     }
   }
 `
