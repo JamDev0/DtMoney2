@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export interface PageMarkerBtnContainerParams {
+interface PageMarkerBtnContainerParams {
   background: 'green' | 'gray'
   color: 'white' | 'gray'
 }

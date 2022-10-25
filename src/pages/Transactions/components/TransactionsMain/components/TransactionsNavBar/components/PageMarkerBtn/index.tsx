@@ -1,7 +1,9 @@
-import { PageMarkerBtnContainer, PageMarkerBtnContainerParams } from './styles'
+import { PageMarkerBtnContainer } from './styles'
 
-interface PageMarkerBtnProps extends PageMarkerBtnContainerParams {
+interface PageMarkerBtnProps {
   number: number
+  background: 'green' | 'gray'
+  color: 'white' | 'gray'
 }
 
 export function PageMarkerBtn({
