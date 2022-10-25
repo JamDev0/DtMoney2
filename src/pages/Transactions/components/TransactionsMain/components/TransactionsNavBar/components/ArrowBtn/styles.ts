@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export interface ArrowBtnContainerParams {
+interface ArrowBtnContainerParams {
   color: 'green' | 'gray'
 }
 

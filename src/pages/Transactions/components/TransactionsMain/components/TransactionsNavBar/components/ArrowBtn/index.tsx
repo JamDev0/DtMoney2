@@ -1,8 +1,10 @@
 import { CaretLeft, CaretRight } from 'phosphor-react'
-import { ArrowBtnContainer, ArrowBtnContainerParams } from './styles'
 
-interface ArrowBtnProps extends ArrowBtnContainerParams {
+import { ArrowBtnContainer } from './styles'
+
+interface ArrowBtnProps {
   direction: 'left' | 'right'
+  color: 'green' | 'gray'
 }
 
 export function ArrowBtn({ color, direction }: ArrowBtnProps) {
