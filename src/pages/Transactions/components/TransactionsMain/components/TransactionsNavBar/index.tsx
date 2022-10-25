@@ -1,5 +1,7 @@
 import { ArrowBtn } from './components/ArrowBtn'
+
 import { PageMarkerBtn } from './components/PageMarkerBtn'
+
 import { PageMarkersContainer, TransactionsNavBarContainer } from './styles'
 
 export function TransactionsNavBar() {
