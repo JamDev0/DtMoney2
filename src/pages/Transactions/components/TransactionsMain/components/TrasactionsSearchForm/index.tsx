@@ -1,14 +1,24 @@
-import { MagnifyingGlass } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
+
+import * as z from 'zod'
+
+import { zodResolver } from '@hookform/resolvers/zod'
+
+import { api } from '../../../../../../libs/axios/axios'
+
+import { useContextSelector } from 'use-context-selector'
+
+import { transactionsAPIContext } from '../../../../../../hooks/useTransactionsAPI'
+
+import { LoadingAnimation } from '../../../../../../components/LoadingAnimation'
+
+import { MagnifyingGlass } from 'phosphor-react'
+
 import {
   SearchBtn,
   SearchInput,
   TransactionsSearchFormContainer,
 } from './styles'
-
-import * as z from 'zod'
-
-import { zodResolver } from '@hookform/resolvers/zod'
 
 const searchFormSchema = z.object({
   query: z.string(),
@@ -26,12 +36,31 @@ export function TransactionsSearchForm() {
     resolver: zodResolver(searchFormSchema),
   })
 
+  const { setQueriedTransactions, setIsGettingQueriedTransactions } =
+    useContextSelector(transactionsAPIContext, (context) => {
+      return {
+        setIsGettingQueriedTransactions:
+          context.setIsGettingQueriedTransactions,
+        setQueriedTransactions: context.setQueriedTransactions,
+      }
+    })
+
   async function handleTransactionsSearchFormContainer(data: searchFormInputs) {
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    setIsGettingQueriedTransactions(true)
+
+    const response = await api.get('transactions', {
+      params: {
+        q: data.query,
+        _sort: 'createdAt',
+        _order: 'desc',
+      },
+    })
+
+    setQueriedTransactions(response.data)
+
+    setIsGettingQueriedTransactions(false)
 
     reset()
-
-    console.log(data)
   }
 
   return (
@@ -47,6 +76,19 @@ export function TransactionsSearchForm() {
         <MagnifyingGlass />
 
         <span>Buscar</span>
+        {isSubmitting ? (
+          <LoadingAnimation
+            style={{
+              width: '1.5rem',
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+            }}
+          />
+        ) : (
+          ''
+        )}
       </SearchBtn>
     </TransactionsSearchFormContainer>
   )
