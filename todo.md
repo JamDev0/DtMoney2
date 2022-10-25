@@ -1,3 +1,1 @@
-[] - Fazer o app todo ter um tamanho fixo
-
-[] - Feedback de enviando form de new transaction(loading animation e disabled dos inputs)
+[] - [Fazer a paginação do app]('https://github.com/typicode/json-server#paginate')
