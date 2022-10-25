@@ -41,7 +41,7 @@ Layout desktop completo, interações completas, funcionalidades de adicionar e 
 
    👉 [axios](https://github.com/axios/axios);
    
-   👉 [json-server](https://github.com/typicode/json-server)
+   👉 [json-server](https://github.com/typicode/json-server) hospedado em [glitch](https://economic-troubled-launch.glitch.me) [nesse repo](https://github.com/JamDev0/DTMoneyServer)
 
   <br>
   <br>
