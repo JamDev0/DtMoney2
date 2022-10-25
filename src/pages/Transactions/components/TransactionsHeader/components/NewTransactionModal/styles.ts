@@ -89,7 +89,7 @@ export const NewTransactionModalInput = styled.input`
 
   background-color: ${(params) => params.theme['gray-900']};
 
-  &[type=number] {
+  &[type='number'] {
     ::-webkit-outer-spin-button,
     ::-webkit-inner-spin-button {
       -webkit-appearance: none;
@@ -110,18 +110,11 @@ export const NewTransactionModalInput = styled.input`
   }
 `
 
-export const NewTransactionTypeOptionsContainer = styled.div`
+export const RegisterNewTransactionBtnContainer = styled.button`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  column-gap: 1rem;
+  justify-content: center;
 
-  width: 100%;
-
-  margin-bottom: 2.5rem;
-`
-
-export const RegisterNewTransactionBtnContainer = styled.button`
   width: 100%;
 
   padding: 1rem 2rem;
@@ -138,7 +131,11 @@ export const RegisterNewTransactionBtnContainer = styled.button`
 
   cursor: pointer;
 
-  :hover {
+  :not(:disabled):hover {
     background-color: ${(params) => params.theme['green-300']};
+  }
+
+  :disabled {
+    opacity: 0.75;
   }
 `
