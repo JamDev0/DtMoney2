@@ -1,19 +1,13 @@
 import { ReactNode } from 'react'
 
-import {
-  Body,
-  Header,
-  TransactionResumeCardContainer,
-  TransactionResumeCardContainerParams,
-  TransactionResumeCardHeaderParams,
-} from './styles'
+import { Body, Header, TransactionResumeCardContainer } from './styles'
 
-interface TransactionResumeCardProps
-  extends TransactionResumeCardContainerParams,
-    TransactionResumeCardHeaderParams {
+interface TransactionResumeCardProps {
   title: string
   icon: ReactNode
   value: number
+  background: 'green' | 'gray' | 'red'
+  iconColor: 'green' | 'red' | 'white'
 }
 
 export function TransactionResumeCard({

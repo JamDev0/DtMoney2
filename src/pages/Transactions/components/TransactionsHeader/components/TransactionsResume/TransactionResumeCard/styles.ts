@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-export interface TransactionResumeCardContainerParams {
+interface TransactionResumeCardContainerParams {
   background: 'green' | 'gray' | 'red'
 }
 
@@ -16,7 +16,7 @@ const backgroundColor = {
   `,
 }
 
-export interface TransactionResumeCardHeaderParams {
+interface TransactionResumeCardHeaderParams {
   iconColor: 'green' | 'red' | 'white'
 }
 
