@@ -1,18 +1,29 @@
-import { ArrowCircleDown, ArrowCircleUp, CurrencyDollar } from 'phosphor-react'
-
 import { TransactionResumeCard } from './TransactionResumeCard'
 
+import { useContextSelector } from 'use-context-selector'
+
+import { transactionsAPIContext } from '../../../../../../hooks/useTransactionsAPI'
+
+import { ArrowCircleDown, ArrowCircleUp, CurrencyDollar } from 'phosphor-react'
+
 import { TransactionsResumeContainer } from './styles'
-import { useTransactionsAPI } from '../../../../../../hooks/useTransactionsAPI'
 
 export function TransactionsResume() {
-  const { transactions, isLoading } = useTransactionsAPI()
+  const { allTransactionsList, isGettingAllTransactions } = useContextSelector(
+    transactionsAPIContext,
+    (context) => {
+      return {
+        allTransactionsList: context.allTransactionsList,
+        isGettingAllTransactions: context.isGettingAllTransactions,
+      }
+    },
+  )
 
   const accumulator = { withdrawn: 0, deposit: 0, total: 0 }
 
   const resume =
-    isLoading === false
-      ? transactions.reduce((acc, transition) => {
+    isGettingAllTransactions === false
+      ? allTransactionsList.reduce((acc, transition) => {
           if (transition.type === 'deposit') {
             acc.deposit += transition.price
             acc.total += transition.price
