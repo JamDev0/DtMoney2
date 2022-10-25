@@ -1,6 +1,10 @@
 import styled from 'styled-components'
 
 export const HeaderContainer = styled.header`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   padding-top: 2.5rem;
   padding-inline: 10rem;
 
@@ -12,6 +16,9 @@ export const HeaderContainer = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    width: 100%;
+    max-width: ${(params) => params.theme['app-max-width']};
 
     > img {
       width: 10.75rem;
