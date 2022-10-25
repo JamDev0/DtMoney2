@@ -1,5 +1,7 @@
 import { TransactionsHeader } from './components/TransactionsHeader'
+
 import { TransactionsMain } from './components/TransactionsMain'
+
 import { TransactionsContainer } from './styles'
 
 export function Transactions() {
