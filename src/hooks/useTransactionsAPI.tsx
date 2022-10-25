@@ -1,78 +1,135 @@
-import produce from 'immer'
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from 'react'
+import { ReactNode, useCallback, useEffect, useReducer } from 'react'
 
-interface transaction {
-  id: number
-  description: string
-  category: string
-  type: 'withdrawn' | 'deposit'
-  price: number
-  createdAt: 'string'
-}
+import { createContext } from 'use-context-selector'
+
+import { api } from '../libs/axios/axios'
+
+import {
+  resetQueriedTransactionsAction,
+  setAllTransactionsAction,
+  setIsGettingAllTransactionsAction,
+  setIsGettingQueriedTransactionAction,
+  setQueriedTransactionsAction,
+  setReloadAllTransactionsAction,
+} from '../reducers/TransactionsAPIReducer/actions'
+
+import {
+  transactionAPIReducer,
+  transactionAPIState,
+} from '../reducers/TransactionsAPIReducer/reducer'
 
 interface transactionsAPIContextInterface {
-  isLoading: boolean | 'uninitialized'
-  transactions: transaction[]
+  allTransactionsList: transactionAPIState['allTransactions']['transactions']
+  isGettingAllTransactions: transactionAPIState['allTransactions']['isGetting']
+
+  queriedTransactionsList: transactionAPIState['queriedTransactions']['transactions']
+  isGettingQueriedTransactions: transactionAPIState['allTransactions']['isGetting']
+  setQueriedTransactions: (
+    transactions: transactionAPIState['queriedTransactions']['transactions'],
+  ) => void
+  setIsGettingQueriedTransactions: (
+    isGettingTransactions: transactionAPIState['queriedTransactions']['isGetting'],
+  ) => void
+  reloadAllTransactions: () => void
 }
 
-const transactionsAPIContext = createContext<transactionsAPIContextInterface>(
-  {} as transactionsAPIContextInterface,
-)
+export const transactionsAPIContext =
+  createContext<transactionsAPIContextInterface>(
+    {} as transactionsAPIContextInterface,
+  )
 
 interface transactionsAPIProviderProps {
   children: ReactNode
 }
 
-interface transactionsAPIState {
-  isLoading: boolean | 'uninitialized'
-  transactions: transaction[]
+const initialTransactionAPIState: transactionAPIState = {
+  allTransactions: {
+    isGetting: 'uninitialized',
+    transactions: [],
+    reload: false,
+  },
+  queriedTransactions: { isGetting: 'uninitialized', transactions: [] },
 }
 
 export function TransactionsAPIProvider({
   children,
 }: transactionsAPIProviderProps) {
-  const [state, setState] = useState<transactionsAPIState>({
-    isLoading: 'uninitialized',
-  } as transactionsAPIState)
+  const [{ allTransactions, queriedTransactions }, dispatch] = useReducer(
+    transactionAPIReducer,
+    initialTransactionAPIState,
+  )
 
-  const isLoading = state.isLoading
+  const allTransactionsList = allTransactions.transactions
 
-  const transactions = state.transactions
+  const isGettingAllTransactions = allTransactions.isGetting
+
+  const shouldReloadAllTransactions = allTransactions.reload
+
+  const isGettingQueriedTransactions = queriedTransactions.isGetting
+
+  const queriedTransactionsList = queriedTransactions.transactions
 
   useEffect(() => {
-    setState((innerState) =>
-      produce(innerState, (draft) => {
-        draft.isLoading = true
-      }),
-    )
+    if (
+      isGettingAllTransactions === 'uninitialized' ||
+      !!shouldReloadAllTransactions
+    ) {
+      dispatch(setIsGettingAllTransactionsAction(true))
 
-    fetch('http://localhost:3333/transactions')
-      .then((response) => response.json())
-      .then((data) =>
-        setState((innerState) =>
-          produce(innerState, (draft) => {
-            draft.transactions = data
-            draft.isLoading = false
-          }),
-        ),
-      )
+      api
+        .get('transactions', {
+          params: {
+            _sort: 'createdAt',
+            _order: 'desc',
+          },
+        })
+        .then((response) => {
+          dispatch(setAllTransactionsAction(response.data))
+
+          dispatch(setIsGettingAllTransactionsAction(false))
+
+          dispatch(setReloadAllTransactionsAction(false))
+        })
+    }
+  }, [isGettingAllTransactions, shouldReloadAllTransactions])
+
+  const reloadAllTransactions = useCallback(() => {
+    dispatch(setReloadAllTransactionsAction(true))
+
+    dispatch(resetQueriedTransactionsAction())
   }, [])
 
+  const setIsGettingQueriedTransactions = useCallback(
+    (
+      isGettingTransactions: transactionAPIState['allTransactions']['isGetting'],
+    ) => {
+      dispatch(setIsGettingQueriedTransactionAction(isGettingTransactions))
+    },
+    [],
+  )
+
+  const setQueriedTransactions = useCallback(
+    (
+      transactions: transactionAPIState['queriedTransactions']['transactions'],
+    ) => {
+      dispatch(setQueriedTransactionsAction(transactions))
+    },
+    [],
+  )
+
   return (
-    <transactionsAPIContext.Provider value={{ isLoading, transactions }}>
+    <transactionsAPIContext.Provider
+      value={{
+        allTransactionsList,
+        isGettingAllTransactions,
+        isGettingQueriedTransactions,
+        queriedTransactionsList,
+        setIsGettingQueriedTransactions,
+        setQueriedTransactions,
+        reloadAllTransactions,
+      }}
+    >
       {children}
     </transactionsAPIContext.Provider>
   )
-}
-
-export function useTransactionsAPI() {
-  const context = useContext(transactionsAPIContext)
-
-  return context
 }
