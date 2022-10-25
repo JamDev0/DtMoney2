@@ -1,5 +1,12 @@
-import { createContext, ReactNode, useContext, useReducer } from 'react'
-import { resetTransactionTypeAction, selectTransactionTypeAction } from '../reducers/transactionTypeReducer/actions'
+import { ReactNode, useCallback, useReducer } from 'react'
+
+import { createContext } from 'use-context-selector'
+
+import {
+  resetTransactionTypeAction,
+  selectTransactionTypeAction,
+} from '../reducers/transactionTypeReducer/actions'
+
 import {
   transactionTypeReducer,
   transactionTypeState,
@@ -11,9 +18,10 @@ interface transactionTypeContextInterface {
   resetTransactionType: () => void
 }
 
-const transactionTypeContext = createContext<transactionTypeContextInterface>(
-  {} as transactionTypeContextInterface,
-)
+export const transactionTypeContext =
+  createContext<transactionTypeContextInterface>(
+    {} as transactionTypeContextInterface,
+  )
 
 const defaultTransactionTypeState: transactionTypeState = {
   selected: null,
@@ -33,27 +41,26 @@ export function TransactionTypeProvider({
 
   const selectedTransactionType = state.selected
 
-  function selectTransactionType(
-    transactionType: transactionTypeState['selected'],
-  ) {
-    dispatch(selectTransactionTypeAction(transactionType))
-  }
+  const selectTransactionType = useCallback(
+    (transactionType: transactionTypeState['selected']) => {
+      dispatch(selectTransactionTypeAction(transactionType))
+    },
+    [],
+  )
 
-  function resetTransactionType() {
+  const resetTransactionType = useCallback(() => {
     dispatch(resetTransactionTypeAction())
-  }
+  }, [])
 
   return (
     <transactionTypeContext.Provider
-      value={{ selectTransactionType, selectedTransactionType, resetTransactionType }}
+      value={{
+        selectTransactionType,
+        selectedTransactionType,
+        resetTransactionType,
+      }}
     >
       {children}
     </transactionTypeContext.Provider>
   )
-}
-
-export function useTransactionType() {
-  const context = useContext(transactionTypeContext)
-
-  return context
 }
